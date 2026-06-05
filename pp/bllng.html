@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Signature | Professional Billing & Menu</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600;800&family=Courier+Prime&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #fbf9f4;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 10px;
+        }
+
+        /* NAV */
+        nav {
+            background: white;
+            border-bottom: 1px solid #eee;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            z-index: 30;
+            flex-shrink: 0;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-logo-box {
+            background: black;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            color: #C5A059;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+
+        .nav-title-sub {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .nav-title-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        .nav-search-wrap {
+            position: relative;
+            width: 260px;
+        }
+
+        .nav-search-wrap i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        .nav-search {
+            width: 100%;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 999px;
+            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            font-size: 0.85rem;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-search:focus {
+            box-shadow: 0 0 0 2px #C5A059;
+        }
+
+        .nav-reload {
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-reload:hover {
+            color: #000;
+        }
+
+        /* MAIN LAYOUT */
+        .main-wrap {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* LEFT - MENU */
+        .menu-panel {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: #fdfcf9;
+        }
+
+        .cat-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cat-btn {
+            background: white;
+            color: #555;
+            padding: 0.6rem 1.5rem;
+            border-radius: 999px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            font-weight: 700;
+            border: 1px solid #eee;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .cat-btn.active-cat {
+            background: #C5A059 !important;
+            color: white !important;
+            border-color: #C5A059;
+        }
+
+        .cat-btn:hover:not(.active-cat) {
+            border-color: #C5A059;
+            color: #C5A059;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 2rem;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: #C5A059;
+        }
+
+        .card-img {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s ease;
+        }
+
+        .menu-card:hover .card-img img {
+            transform: scale(1.1);
+        }
+
+        .card-cat-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 0.2rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #C5A059;
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 1.25rem 1.5rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .card-price {
+            color: #C5A059;
+            font-weight: 800;
+            font-style: italic;
+        }
+
+        .card-desc {
+            color: #888;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+            flex: 1;
+        }
+
+        .card-add {
+            background: none;
+            border: none;
+            border-bottom: 2px solid #C5A059;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            color: #111;
+            transition: color 0.2s;
+            padding-bottom: 2px;
+            align-self: flex-start;
+        }
+
+        .card-add:hover {
+            color: #C5A059;
+        }
+
+        /* RIGHT - BILL */
+        .bill-panel {
+            width: 440px;
+            background: #121212;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .bill-panel-title {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .bill-paper {
+            background: white;
+            border-radius: 12px 12px 0 0;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bill-paper::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(-45deg, transparent 5px, white 5px), linear-gradient(45deg, transparent 5px, white 5px);
+            background-size: 10px 20px;
+        }
+
+        .bill-header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        .bill-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .bill-header .tagline {
+            font-size: 0.55rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 2px;
+        }
+
+        .bill-meta {
+            font-size: 0.7rem;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .cart-list {
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            font-size: 0.75rem;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .cart-empty-state {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-style: italic;
+            opacity: 0.5;
+        }
+
+        .cart-empty-state i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-row:last-child {
+            border-bottom: none;
+        }
+
+        .cart-row-info {
+            flex: 1;
+        }
+
+        .cart-row-name {
+            font-weight: 700;
+            color: #111;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.72rem;
+        }
+
+        .cart-row-sub {
+            font-size: 0.65rem;
+            color: #999;
+            margin-top: 1px;
+        }
+
+        .cart-row-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cart-row-total {
+            font-weight: 700;
+            color: #111;
+        }
+
+        .remove-btn {
+            color: #f87171;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .cart-row:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .bill-totals {
+            margin-top: 1.2rem;
+            padding-top: 0.8rem;
+            border-top: 2px double #ccc;
+        }
+
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            margin-bottom: 4px;
+            color: #666;
+        }
+
+        .total-line.grand {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #111;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #ccc;
+        }
+
+        .total-line.grand span:last-child {
+            color: #C5A059;
+            font-size: 1.3rem;
+        }
+
+        .bill-actions {
+            margin-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .btn-clear {
+            border: 1px solid #333;
+            color: #888;
+            background: transparent;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-clear:hover {
+            background: #3d0000;
+            border-color: #f87171;
+            color: #f87171;
+        }
+
+        .btn-order {
+            background: #C5A059;
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.2s;
+            box-shadow: 0 4px 16px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-order:hover {
+            background: #94763a;
+        }
+
+        .btn-print {
+            margin-top: 0.6rem;
+            background: #1f1f1f;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn-print:hover {
+            background: #333;
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        /* INFO MODAL */
+        .info-box {
+            background: #121212;
+            border: 1px solid #2e2b24;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 360px;
+            width: 90%;
+            color: #f0ece4;
+        }
+
+        .info-box h3 {
+            font-family: 'Playfair Display', serif;
+            color: #d4a843;
+            margin-bottom: 1.2rem;
+            font-size: 1.3rem;
+        }
+
+        .info-input {
+            width: 100%;
+            background: #222018;
+            border: 1px solid #2e2b24;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: #f0ece4;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            outline: none;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .info-input:focus {
+            border-color: #d4a843;
+        }
+
+        .info-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background: #d4a843;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* PAY MODAL */
+        .pay-box {
+            background: #121212;
+            border: 1px solid #2e2b24;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+            color: #f0ece4;
+        }
+
+        .pay-box h2 {
+            font-family: 'Playfair Display', serif;
+            color: #d4a843;
+            font-size: 1.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .pay-box p {
+            color: #8a8070;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .phonepe-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .pp-logo {
+            background: #5f259f;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .phonepe-name {
+            color: #5f259f;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .accepted-text {
+            color: #5f259f;
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+
+        .qr-wrap {
+            background: white;
+            border-radius: 14px;
+            padding: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0 0.8rem;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: #aaa;
+            font-size: 0.75rem;
+        }
+
+        .qr-placeholder i {
+            font-size: 3rem;
+            color: #5f259f;
+        }
+
+        .payee-name {
+            font-size: 0.8rem;
+            color: #8a8070;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .amount-big {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #52b788;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-confirm {
+            flex: 1;
+            padding: 0.85rem;
+            background: #52b788;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 0.85rem;
+            background: transparent;
+            color: #8a8070;
+            border: 1px solid #2e2b24;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* SUCCESS */
+        .success-section {
+            display: none;
+        }
+
+        .success-section.show {
+            display: block;
+        }
+
+        .qr-section.hide {
+            display: none;
+        }
+
+        .order-ref-display {
+            font-size: 0.8rem;
+            color: #8a8070;
+            margin-top: 0.5rem;
+        }
+
+        .checkmark-big {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .bill-panel {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .main-wrap {
+                flex-direction: column;
+            }
+
+            .menu-panel {
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <div class="nav-logo-box">A1</div>
+            <div>
+                <div class="nav-title-sub">The Signature</div>
+                <div class="nav-title-main">Billing Terminal</div>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem;">
+            <div class="nav-search-wrap">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" class="nav-search" id="menuSearch" oninput="searchMenu()"
+                    placeholder="Search signature dishes...">
+            </div>
+            <button class="nav-reload" onclick="location.reload()"><i class="fa-solid fa-rotate"></i></button>
+        </div>
+    </nav>
+
+    <div class="main-wrap">
+        <!-- LEFT: MENU -->
+        <div class="menu-panel">
+            <div class="cat-row" id="catRow">
+                <button class="cat-btn active-cat" onclick="filterCat('all',this)">All</button>
+                <button class="cat-btn" onclick="filterCat('starter',this)">Starters</button>
+                <button class="cat-btn" onclick="filterCat('main',this)">Main Course</button>
+                <button class="cat-btn" onclick="filterCat('dessert',this)">Desserts</button>
+            </div>
+            <div class="item-grid" id="itemGrid"></div>
+        </div>
+
+        <!-- RIGHT: BILL -->
+        <div class="bill-panel">
+            <div class="bill-panel-title">Current Order</div>
+            <div class="bill-paper">
+                <div class="bill-header">
+                    <h3>A1 Restaurant</h3>
+                    <div class="tagline">Authentic &amp; Iconic Gourmet</div>
+                    <div class="bill-meta" id="billMeta">Table: — | Today</div>
+                </div>
+                <div class="cart-list" id="cartList">
+                    <div class="cart-empty-state">
+                        <i class="fa-solid fa-utensils"></i>
+                        <p>No Items Selected</p>
+                    </div>
+                </div>
+                <div class="bill-totals">
+                    <div class="total-line"><span>Sub-Total</span><span id="subTotal">₹0.00</span></div>
+                    <div class="total-line" style="color:#999"><span>Service Tax (GST 5%)</span><span
+                            id="taxTotal">₹0.00</span></div>
+                    <div class="total-line grand"><span>TOTAL</span><span id="grandTotal">₹0.00</span></div>
+                </div>
+            </div>
+            <div class="bill-actions">
+                <button class="btn-clear" onclick="clearAll()">CLEAR ALL</button>
+                <button class="btn-order" onclick="openInfoModal()">ORDER NOW</button>
+            </div>
+            <button class="btn-print" onclick="window.print()">🖨 GENERATE INVOICE</button>
+        </div>
+    </div>
+
+    <!-- CUSTOMER INFO MODAL -->
+    <div class="modal-overlay" id="infoModal">
+        <div class="info-box">
+            <h3>📋 Order Details</h3>
+            <input class="info-input" type="text" id="infoTable" placeholder="Table No (e.g. T-05)">
+            <input class="info-input" type="text" id="infoName" placeholder="Customer Name">
+            <input class="info-input" type="tel" id="infoPhone" placeholder="Phone Number">
+            <button class="info-submit" onclick="proceedToPayment()">Continue to Payment →</button>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-overlay" id="payModal">
+        <div class="pay-box">
+            <div id="qrSection" class="qr-section">
+                <div class="phonepe-badge">
+                    <div class="pp-logo">Pe</div>
+                    <span class="phonepe-name">PhonePe</span>
+                </div>
+                <div class="accepted-text">ACCEPTED HERE</div>
+                <p style="font-size:0.75rem;margin-bottom:0.5rem">Scan &amp; Pay Using PhonePe App</p>
+                <div class="qr-wrap">
+                    <img src="../static/qr.png" alt="PhonePe QR Code"
+                        style="width:220px;height:220px;object-fit:contain;border-radius:8px;display:block;">
+                </div>
+                <div class="payee-name">SANIYA MUSA KORTI</div>
+                <div class="amount-big" id="modalAmount">₹0.00</div>
+                <div class="btn-row">
+                    <button class="btn-cancel" onclick="closePayModal()">Cancel</button>
+                    <button class="btn-confirm" onclick="confirmPayment()">✓ Payment Done</button>
+                </div>
+            </div>
+            <div id="successSection" class="success-section">
+                <div class="checkmark-big">✅</div>
+                <h2>Order Confirmed!</h2>
+                <p>Order has been saved successfully.</p>
+                <div class="order-ref-display" id="confirmedRef"></div>
+                <br>
+                <button class="btn-confirm" style="width:100%" onclick="resetBilling()">New Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuItems = [
+            { id: 1, name: "Charred Tandoori", price: 380, cat: "starter", desc: "Bone-in chicken marinated in secret hand-ground spices.", img: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400" },
+            { id: 2, name: "Chicken 65", price: 280, cat: "starter", desc: "Deep-fried spicy tempered chicken with curry leaves.", img: "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=400" },
+            { id: 3, name: "Paneer Tikka Royale", price: 320, cat: "starter", desc: "Creamy paneer cubes with bell peppers and house dip.", img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400" },
+            { id: 4, name: "Signature Mutton Biryani", price: 450, cat: "main", desc: "Slow-dum aromatic Basmati rice infused with saffron.", img: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?w=400" },
+            { id: 5, name: "Velvet Butter Chicken", price: 450, cat: "main", desc: "Boneless morsels simmered in a silky tomato makhani.", img: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400" },
+            { id: 6, name: "Kashmiri Rogan Josh", price: 480, cat: "main", desc: "Rich mutton curry with Kashmiri chilies and alkanet flower.", img: "https://images.unsplash.com/photo-1545247181-516773cae754?w=400" },
+            { id: 7, name: "Gulab Jamun Flambé", price: 180, cat: "dessert", desc: "Golden dumplings served with warm saffron syrup.", img: "https://images.unsplash.com/photo-1589119908995-c6837fa14848?w=400" },
+            { id: 8, name: "Kesar Phirni", price: 210, cat: "dessert", desc: "Slow-cooked rice pudding garnished with pistachios.", img: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400" }
+        ];
+
+        let cart = [];
+        let pendingData = null;
+
+        function renderMenu(items) {
+            const grid = document.getElementById('itemGrid');
+            if (!items.length) { grid.innerHTML = '<p style="color:#aaa;font-size:0.85rem">No items found.</p>'; return; }
+            grid.innerHTML = items.map(item => `
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="${item.img}" alt="${item.name}" loading="lazy">
+                        <span class="card-cat-badge">${item.cat}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-top">
+                            <span class="card-name">${item.name}</span>
+                            <span class="card-price">₹${item.price}</span>
+                        </div>
+                        <p class="card-desc">${item.desc}</p>
+                        <button class="card-add" onclick="addToCart(${item.id})">Add to Plate</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const item = menuItems.find(i => i.id === id);
+            const exists = cart.find(i => i.id === id);
+            if (exists) { exists.qty++; } else { cart.push({ ...item, qty: 1 }); }
+            updateCart();
+        }
+
+        function removeItem(id) {
+            const idx = cart.findIndex(i => i.id === id);
+            if (idx === -1) return;
+            if (cart[idx].qty > 1) { cart[idx].qty--; } else { cart.splice(idx, 1); }
+            updateCart();
+        }
+
+        function updateCart() {
+            const list = document.getElementById('cartList');
+            if (!cart.length) {
+                list.innerHTML = `<div class="cart-empty-state"><i class="fa-solid fa-utensils"></i><p>No Items Selected</p></div>`;
+            } else {
+                list.innerHTML = cart.map(item => `
+                    <div class="cart-row">
+                        <div class="cart-row-info">
+                            <div class="cart-row-name">${item.name}</div>
+                            <div class="cart-row-sub">${item.qty} × ₹${item.price}</div>
+                        </div>
+                        <div class="cart-row-right">
+                            <span class="cart-row-total">₹${item.qty * item.price}</span>
+                            <button class="remove-btn" onclick="removeItem(${item.id})"><i class="fa-solid fa-circle-minus"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            const sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
+            const tax = sub * 0.05;
+            document.getElementById('subTotal').textContent = `₹${sub.toFixed(2)}`;
+            document.getElementById('taxTotal').textContent = `₹${tax.toFixed(2)}`;
+            document.getElementById('grandTotal').textContent = `₹${(sub + tax).toFixed(2)}`;
+        }
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-cat'));
+            btn.classList.add('active-cat');
+            renderMenu(cat === 'all' ? menuItems : menuItems.filter(i => i.cat === cat));
+        }
+
+        function searchMenu() {
+            const term = document.getElementById('menuSearch').value.toLowerCase();
+            renderMenu(menuItems.filter(i => i.name.toLowerCase().includes(term)));
+        }
+
+        function clearAll() {
+            if (confirm("Clear entire order?")) { cart = []; updateCart(); }
+        }
+
+        function openInfoModal() {
+            if (!cart.length) { alert("Cart is empty! Add some items first."); return; }
+            document.getElementById('infoModal').classList.add('show');
+        }
+
+        function proceedToPayment() {
+            const tableNo = document.getElementById('infoTable').value.trim() || 'Walk-in';
+            const custName = document.getElementById('infoName').value.trim() || 'Guest';
+            const phone = document.getElementById('infoPhone').value.trim() || '';
+            document.getElementById('billMeta').textContent = `Table: ${tableNo} | ${new Date().toLocaleDateString('en-IN')}`;
+            const sub = cart.reduce((a, i) => a + i.price * i.qty, 0);
+            const tax = sub * 0.05;
+            const grand = sub + tax;
+            pendingData = {
+                table_no: tableNo, customer_name: custName, phone,
+                items: cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+                subtotal: sub, tax, total: grand
+            };
+            document.getElementById('infoModal').classList.remove('show');
+            document.getElementById('modalAmount').textContent = `₹${grand.toFixed(2)}`;
+            document.getElementById('qrSection').classList.remove('hide');
+            document.getElementById('successSection').classList.remove('show');
+            document.getElementById('payModal').classList.add('show');
+        }
+
+        function closePayModal() { document.getElementById('payModal').classList.remove('show'); }
+
+        async function confirmPayment() {
+            let orderRef = 'DI-' + Date.now().toString().slice(-6);
+            // Try to save to backend if available
+            try {
+                const res = await fetch('/save_order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(pendingData)
+                });
+                const data = await res.json();
+                if (data.order_ref) orderRef = data.order_ref;
+            } catch (e) { /* offline mode — use local ref */ }
+            document.getElementById('qrSection').classList.add('hide');
+            document.getElementById('successSection').classList.add('show');
+            document.getElementById('confirmedRef').textContent = `Order Ref: ${orderRef}`;
+        }
+
+        function resetBilling() {
+            cart = []; updateCart(); pendingData = null;
+            document.getElementById('payModal').classList.remove('show');
+            document.getElementById('qrSection').classList.remove('hide');
+            document.getElementById('successSection').classList.remove('show');
+            ['infoTable', 'infoName', 'infoPhone'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('billMeta').textContent = 'Table: — | Today';
+        }
+
+        // Init
+        renderMenu(menuItems);
+    </script>
+</body>
+
+</html>

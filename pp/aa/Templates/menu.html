@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Signature Menu | A1 Restaurant</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C5A059;
+            --dark-gold: #94763a;
+            --cream: #fbf9f4;
+            --deep-black: #121212;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--cream);
+            color: var(--deep-black);
+            overflow-x: hidden;
+        }
+
+        /* --- CREATIVE PARALLAX HEADER --- */
+        .menu-hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .menu-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.5rem, 10vw, 6rem);
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .menu-hero p {
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            font-size: 14px;
+            color: var(--gold);
+        }
+
+        /* --- CATEGORY SELECTOR --- */
+        .menu-nav {
+            background: white;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .menu-nav a {
+            text-decoration: none;
+            color: var(--deep-black);
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .menu-nav a:hover {
+            color: var(--gold);
+        }
+
+        /* --- CREATIVE MENU GRID --- */
+        .menu-section {
+            max-width: 1300px;
+            margin: 80px auto;
+            padding: 0 5%;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            width: 50px;
+            height: 2px;
+            background: var(--gold);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        /* THE CREATIVE ITEM CARD */
+        .menu-item {
+            display: flex;
+            background: white;
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid #f0f0f0;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .item-image {
+            width: 150px;
+            height: 100%;
+            min-height: 180px;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s;
+        }
+
+        .menu-item:hover .item-image {
+            transform: scale(1.1);
+        }
+
+        .item-details {
+            padding: 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .item-price {
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .item-desc {
+            font-size: 0.85rem;
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .order-btn {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--deep-black);
+            text-decoration: none;
+            border-bottom: 2px solid var(--gold);
+            align-self: flex-start;
+            padding-bottom: 2px;
+        }
+
+        /* --- MANAGEMENT FOOTER (YOUR SPECIFIC ITEMS) --- */
+        .mgmt-footer {
+            background: var(--deep-black);
+            padding: 100px 5%;
+            color: white;
+            text-align: center;
+        }
+
+        .mgmt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .mgmt-link {
+            text-decoration: none;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .mgmt-link:hover {
+            color: var(--gold);
+        }
+
+        .mgmt-link h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .item-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-item {
+                flex-direction: column;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="menu-hero">
+        <p>Authentic & Iconic</p>
+        <h1>The Menu</h1>
+    </header>
+
+    <nav class="menu-nav">
+        <a href="/main course">main course</a>
+        <a href="/starter">starter</a>
+        <a href="/desert">desert</a>
+    </nav>
+
+    <section class="non-veg-white">
+        <div class="gourmet-container">
+
+            <div class="gourmet-header">
+                <span class="gold-subtitle">Our Signature Non-Veg Selection</span>
+                <h2 class="gourmet-title">The <span class="accent">Art</span> of Meat</h2>
+                <div class="gourmet-divider"></div>
+            </div>
+
+            <div class="gourmet-list">
+
+                <div class="gourmet-item">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80"
+                            alt="Special Mutton Biryani">
+                        <div class="visual-number">01</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Signature Mutton Biryani</h3>
+                        <p>Experience the heritage of A1 with our slow-dum biryani, featuring tender mutton pieces and
+                            aromatic Basmati rice infused with saffron.</p>
+                        <!-- <div class="gourmet-footer">
+                        <span class="gourmet-price">₹450</span>
+                        <a href="/order" class="gourmet-btn">Add to Plate</a>
+                    </div> -->
+                    </div>
+                </div>
+
+                <div class="gourmet-item reverse">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80"
+                            alt="Tandoori Chicken">
+                        <div class="visual-number">02</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Charred Tandoori Chicken</h3>
+                        <p>A classic reimagined. Chicken marinated overnight in spiced yogurt and grilled in a
+                            traditional clay oven for that smoky perfection.</p>
+                        <!-- <div class="gourmet-footer">
+                        <span class="gourmet-price">₹380</span>
+                        <a href="/order" class="gourmet-btn">Add to Plate</a>
+                    </div> -->
+                    </div>
+                </div>
+
+                <div class="gourmet-item">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1545247181-516773cae754?auto=format&fit=crop&w=800&q=80"
+                            alt="Mutton Rogan Josh">
+                        <div class="visual-number">03</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Kashmiri Rogan Josh</h3>
+                        <p>Rich, aromatic mutton curry featuring a deep red sauce made from Kashmiri chilies and
+                            flavored with alkanet flower and spices.</p>
+                        <!-- <div class="gourmet-footer">
+                        <span class="gourmet-price">₹480</span>
+                        <a href="/order" class="gourmet-btn">Add to Plate</a>
+                    </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .non-veg-white {
+            padding: 120px 10%;
+            background-color: #FFFFFF;
+            color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gourmet-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .gold-subtitle {
+            color: #C5A059;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .gourmet-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .gourmet-title .accent {
+            color: #C5A059;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .gourmet-divider {
+            width: 60px;
+            height: 3px;
+            background: #C5A059;
+            margin: 0 auto;
+        }
+
+        /* --- ITEM LAYOUT --- */
+        .gourmet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .gourmet-item {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .gourmet-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        /* Visual Content */
+        .gourmet-visual {
+            flex: 1;
+            position: relative;
+        }
+
+        .gourmet-visual img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.08);
+            transition: 0.5s ease;
+        }
+
+        .visual-number {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: rgba(197, 160, 89, 0.15);
+            font-weight: 900;
+            z-index: -1;
+        }
+
+        .gourmet-item:hover img {
+            transform: translateY(-10px);
+            box-shadow: 25px 25px 70px rgba(197, 160, 89, 0.15);
+        }
+
+        /* Details Content */
+        .gourmet-details {
+            flex: 1;
+        }
+
+        .gourmet-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #0A0A0A;
+        }
+
+        .gourmet-details p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        .gourmet-footer {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .gourmet-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0A0A0A;
+        }
+
+        .gourmet-btn {
+            padding: 12px 30px;
+            background: #0A0A0A;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .gourmet-btn:hover {
+            background: #C5A059;
+            border-radius: 50px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+
+            .gourmet-item,
+            .gourmet-item.reverse {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .gourmet-title {
+                font-size: 2.8rem;
+            }
+
+            .gourmet-footer {
+                justify-content: center;
+            }
+
+            .visual-number {
+                left: 50%;
+                transform: translateX(-50%);
+                top: -50px;
+            }
+        }
+    </style>
+
+    <section class="menu-section" id="signature">
+        <h2 class="section-title">Chef's Signatures</h2>
+        <div class="item-grid">
+
+            <div class="menu-item">
+                <div class="item-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?auto=format&fit=crop&w=500&q=80');">
+                </div>
+                <div class="item-details">
+                    <div class="item-header">
+                        <span class="item-name">Velvet Butter Chicken</span>
+                        <span class="item-price">₹450</span>
+                    </div>
+                    <p class="item-desc">Boneless morsels charred in the tandoor and simmered in a silky tomato makhani.
+                    </p>
+                    <!-- <a href="/order" class="order-btn">Add to Order</a> -->
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1603894584373-5ac82b0ae501?auto=format&fit=crop&w=500&q=80');">
+                </div>
+                <div class="item-details">
+                    <div class="item-header">
+                        <span class="item-name">A1 Ghee Roast</span>
+                        <span class="item-price">₹480</span>
+                    </div>
+                    <p class="item-desc">A Mangalorean masterpiece sautéed in pure clarified butter and spicy masalas.
+                    </p>
+                    <!-- <a href="/order" class="order-btn">Add to Order</a> -->
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="menu-section" id="starters">
+        <h2 class="section-title">Traditional Starters</h2>
+        <div class="item-grid">
+            <div class="menu-item">
+                <div class="item-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=500&q=80');">
+                </div>
+                <div class="item-details">
+                    <div class="item-header">
+                        <span class="item-name">Tandoori Classic</span>
+                        <span class="item-price">₹390</span>
+                    </div>
+                    <p class="item-desc">Bone-in chicken marinated in secret hand-ground spices and roasted over coal.
+                    </p>
+                    <!-- <a href="/order" class="order-btn">Add to Order</a> -->
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <div class="item-image"
+                    style="background-image: url('https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=500&q=80');">
+                </div>
+                <div class="item-details">
+                    <div class="item-header">
+                        <span class="item-name">Chicken 65</span>
+                        <span class="item-price">₹280</span>
+                    </div>
+                    <p class="item-desc">Deep-fried spicy tempered chicken with curry leaves and green chilies.</p>
+                    <!-- <a href="/order" class="order-btn">Add to Order</a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="mgmt-footer">
+        <p style="color: var(--gold); letter-spacing: 4px; font-size: 11px;">A1 MANAGEMENT SYSTEM</p>
+        <div class="mgmt-grid">
+            <a href="/order" class="mgmt-link">
+                <h4>Live Orders</h4>
+                <p>Track your meal</p>
+            </a>
+            <a href="/Billing" class="mgmt-link">
+                <h4>Order Booking</h4>
+                <p>Digital Invoicing</p>
+            </a>
+            <!-- <a href="/Table reservation" class="mgmt-link">
+            <h4>Table Booking</h4>
+            <p>Reserve a Spot</p>
+        </a>
+        <a href="/Availability" class="mgmt-link">
+            <h4>Availability</h4>
+            <p>Real-time Status</p> 
+        </a> --> 
+            <a href="/Rating and Review" class="mgmt-link">
+                <h4>Reviews</h4>
+                <p>Share Feedback</p>
+            </a>
+            <a href="/Employee" class="mgmt-link">
+                <h4>Staff Portal</h4>
+                <p>Team Access</p>
+            </a>
+            <a href="/Availability" class="mgmt-link">
+            <h4>Availability</h4>
+            <p>Real-time Status</p> 
+        </a>
+        </div>
+        <div style="margin-top: 80px; border-top: 1px solid #333; padding-top: 20px; font-size: 11px; opacity: 0.5;">
+            &copy; 2026 A1 Restaurant Management. Handcrafted by Asma Haveli.
+        </div>
+    </div>
+
+</body>
+
+</html>

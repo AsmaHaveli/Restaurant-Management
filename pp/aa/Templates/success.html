@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success | A1 Restaurant</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #0f0f0f;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .card {
+            background: #1a1a1a;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .gold {
+            color: #C5A059;
+        }
+
+        .btn {
+            background: #C5A059;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #a8843f;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center h-screen">
+
+    <div class="card text-center p-10 rounded-2xl w-[420px]">
+
+        <!-- ICON -->
+        <div class="text-green-500 text-6xl mb-4">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <!-- TITLE -->
+        <h1 class="text-white text-2xl font-bold mb-2">
+            Order Placed Successfully!
+        </h1>
+
+        <p class="text-gray-400 text-sm mb-6">
+            Your order has been received and sent to the kitchen.
+        </p>
+
+        <!-- ORDER INFO -->
+        <div class="bg-black p-4 rounded-lg text-left text-sm text-gray-300 mb-6">
+            <p><span class="gold font-bold">Status:</span> Confirmed</p>
+            <p><span class="gold font-bold">Kitchen:</span> Notified</p>
+            <p><span class="gold font-bold">Table:</span> Assigned</p>
+        </div>
+
+        <!-- BUTTON -->
+        <button onclick="goHome()" class="btn w-full py-3 rounded-lg font-bold text-black">
+            Back to Menu
+        </button>
+
+        <p class="text-xs text-gray-500 mt-4">
+            Thank you for dining with A1 Signature 🍽️
+        </p>
+    </div>
+
+    <script>
+        function goHome() {
+            window.location.href = "/";
+        }
+
+        // Clear cart safety (optional backup)
+        localStorage.removeItem("cart");
+    </script>
+
+</body>
+
+</html>

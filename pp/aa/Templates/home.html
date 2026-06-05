@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Restaurant | Authentic & Iconic</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --gold: #C5A059;
+            --dark-gold: #8B6E3C;
+            --cream: #F9F7F2;
+            --deep-black: #0A0A0A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--cream);
+            color: var(--deep-black);
+            overflow-x: hidden;
+        }
+
+        /* --- TRANSPARENT FLOATING NAV --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: 0.3s;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* --- MASSIVE HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0.6;
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            color: white;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 14px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* --- FULL WIDTH SPLIT SECTION --- */
+        .intro-section {
+            padding: 100px 10%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            background: white;
+        }
+
+        .intro-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .intro-text p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* --- THE GRID (Modern & Creative) --- */
+        .services-container {
+            padding: 100px 5%;
+            background: var(--cream);
+        }
+
+        /* 4-card grid: 2 columns x 2 rows */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: #000;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            text-decoration: none;
+            color: white;
+            transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .service-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+            transition: 0.8s ease;
+            z-index: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card:hover img {
+            opacity: 0.7;
+            transform: scale(1.1);
+        }
+
+        .card-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .service-card p {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            background: linear-gradient(135deg, #2b1a10, #432818);
+            color: #fff;
+            padding: 60px 20px 20px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .footer-box h3 {
+            color: #bb9457;
+            margin-bottom: 15px;
+        }
+
+        .footer-logo {
+            color: #bb9457;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .footer-box p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
+
+        .footer-box a {
+            display: block;
+            text-decoration: none;
+            color: #ccc;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .footer-box a:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: #bb9457;
+            transform: scale(1.2);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+
+            .intro-section,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <a href="/" class="nav-logo">A1 RESTAURANT</a>
+        <div class="nav-links">
+            <a href="/menu">Menu</a>
+            <a href="/About">Story</a>
+            <a href="/contact">Contact</a>
+            <a href="login">login</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video autoplay loop muted playsinline src="/static/video.mp4"></video>
+        <div class="hero-content">
+            <p>Est. 1996</p>
+            <h1>Pure Tradition.<br>Unmatched Taste.</h1>
+        </div>
+    </section>
+
+    <section class="intro-section">
+        <div class="intro-text">
+            <h2>Welcome to Excellence</h2>
+            <p>Inspired by the heritage of iconic dining, A1 Restaurant brings the soul of traditional cooking to your
+                table. We manage our craft with the same precision we manage our kitchens.</p>
+            <a href="/About"
+                style="color: var(--gold); font-weight: bold; text-decoration: none; border-bottom: 2px solid;">LEARN
+                MORE</a>
+        </div>
+        <div class="intro-img">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"
+                style="width: 100%; border-radius: 5px;" alt="Chef cooking">
+        </div>
+    </section>
+
+    <div class="services-container">
+        <div class="services-grid">
+            <!-- Card 1: Live Orders → /order -->
+            <a href="/order" class="service-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
+                    alt="Live Orders">
+                <div class="card-info">
+                    <p>Your order just a click away</p>
+                    <h3>Live Orders</h3>
+                </div>
+            </a>
+
+            <!-- Card 2: Smart Billing → /Billing -->
+            <a href="/Billing" class="service-card">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80"
+                    alt="Smart Billing">
+                <div class="card-info">
+                    <p>Seamless digital payments</p>
+                    <h3>Smart Billing</h3>
+                </div>
+            </a>
+
+            <!-- Card 3: Table Reservation → /Table reservation -->
+            <a href="/Table reservation" class="service-card">
+                <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80"
+                    alt="Table Booking">
+                <div class="card-info">
+                    <p>Reserve your perfect spot</p>
+                    <h3>Table Booking</h3>
+                </div>
+            </a>
+
+            <!-- Card 4 NEW: Home Delivery → /delivery -->
+            <a href="/delivery" class="service-card">
+                <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&w=800&q=80"
+                    alt="Home Delivery">
+                <div class="card-info">
+                    <p>Fresh food at your doorstep</p>
+                    <h3>Home Delivery</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <section class="non-veg-white">
+        <div class="gourmet-container">
+
+            <div class="gourmet-header">
+                <span class="gold-subtitle">Our Signature Non-Veg Selection</span>
+                <h2 class="gourmet-title">The <span class="accent">Art</span> of Meat</h2>
+                <div class="gourmet-divider"></div>
+            </div>
+
+            <div class="gourmet-list">
+
+                <div class="gourmet-item">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&w=800&q=80"
+                            alt="Special Mutton Biryani">
+                        <div class="visual-number">01</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Signature Mutton Biryani</h3>
+                        <p>Experience the heritage of A1 with our slow-dum biryani, featuring tender mutton pieces and
+                            aromatic Basmati rice infused with saffron.</p>
+                    </div>
+                </div>
+
+                <div class="gourmet-item reverse">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?auto=format&fit=crop&w=800&q=80"
+                            alt="Tandoori Chicken">
+                        <div class="visual-number">02</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Charred Tandoori Chicken</h3>
+                        <p>A classic reimagined. Chicken marinated overnight in spiced yogurt and grilled in a
+                            traditional clay oven for that smoky perfection.</p>
+                    </div>
+                </div>
+
+                <div class="gourmet-item">
+                    <div class="gourmet-visual">
+                        <img src="https://images.unsplash.com/photo-1545247181-516773cae754?auto=format&fit=crop&w=800&q=80"
+                            alt="Mutton Rogan Josh">
+                        <div class="visual-number">03</div>
+                    </div>
+                    <div class="gourmet-details">
+                        <h3>Kashmiri Rogan Josh</h3>
+                        <p>Rich, aromatic mutton curry featuring a deep red sauce made from Kashmiri chilies and
+                            flavored with alkanet flower and spices.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .non-veg-white {
+            padding: 120px 10%;
+            background-color: #FFFFFF;
+            color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gourmet-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .gold-subtitle {
+            color: #C5A059;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .gourmet-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .gourmet-title .accent {
+            color: #C5A059;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .gourmet-divider {
+            width: 60px;
+            height: 3px;
+            background: #C5A059;
+            margin: 0 auto;
+        }
+
+        .gourmet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .gourmet-item {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .gourmet-item.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .gourmet-visual {
+            flex: 1;
+            position: relative;
+        }
+
+        .gourmet-visual img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.08);
+            transition: 0.5s ease;
+        }
+
+        .visual-number {
+            position: absolute;
+            top: -30px;
+            left: -30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: rgba(197, 160, 89, 0.15);
+            font-weight: 900;
+            z-index: -1;
+        }
+
+        .gourmet-item:hover img {
+            transform: translateY(-10px);
+            box-shadow: 25px 25px 70px rgba(197, 160, 89, 0.15);
+        }
+
+        .gourmet-details {
+            flex: 1;
+        }
+
+        .gourmet-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #0A0A0A;
+        }
+
+        .gourmet-details p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        @media (max-width: 992px) {
+
+            .gourmet-item,
+            .gourmet-item.reverse {
+                flex-direction: column;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .gourmet-title {
+                font-size: 2.8rem;
+            }
+
+            .visual-number {
+                left: 50%;
+                transform: translateX(-50%);
+                top: -50px;
+            }
+        }
+    </style>
+
+    <!-- <section class="about-asma-fixed reveal">
+        <div class="asma-container">
+
+            <!-- <div class="asma-image-side">
+                <div class="image-box-fixed">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80"
+                        alt="Asma Haveli">
+                        
+                    <div class="gold-accent-bar"></div>
+                </div>
+            </div> -->
+
+           <center> <div class="asma-text-side">
+                <div class="text-inner">
+                    <span class="dev-tag">Developer & Designer</span>
+                    <h1 class="dev-name">Asma <span class="gold-text">Haveli</span></h1>
+                    <div class="dev-divider"></div>
+                    <p class="dev-bio">
+                        Specializing in Restaurant Management Systems, I bridge the gap between traditional culinary
+                        hospitality and modern digital architecture. This project is a fusion of heritage and clean,
+                        professional code.
+                    </p>
+                    <a href="https://www.instagram.com/anonymouskyy._/" class="dev-contact">LET'S CONNECT</a>
+                </div>
+            </div>
+            </center>
+
+        </div>
+    </section> -->
+
+    <style>
+        .about-asma-fixed {
+            padding: 100px 5%;
+            background: #fff;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .asma-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .asma-image-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 400px;
+        }
+
+        .image-box-fixed {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            height: 550px;
+        }
+
+        .image-box-fixed img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .gold-accent-bar {
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            border-top: 5px solid var(--gold);
+            border-left: 5px solid var(--gold);
+            z-index: 1;
+        }
+
+        .asma-text-side {
+            flex: 1;
+        }
+
+        .text-inner {
+            max-width: 500px;
+        }
+
+        .dev-tag {
+            font-size: 12px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .dev-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .gold-text {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .dev-divider {
+            width: 50px;
+            height: 3px;
+            background: var(--gold);
+            margin-bottom: 30px;
+        }
+
+        .dev-bio {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 35px;
+        }
+
+        .dev-contact {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--deep-black);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .dev-contact:hover {
+            background: var(--gold);
+        }
+
+        @media (max-width: 992px) {
+            .asma-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .asma-image-side {
+                min-width: 100%;
+            }
+
+            .image-box-fixed {
+                height: 400px;
+            }
+
+            .dev-name {
+                font-size: 3rem;
+            }
+
+            .dev-divider {
+                margin: 0 auto 30px;
+            }
+        }
+    </style>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-box">
+                <h2 class="footer-logo">A1 Restaurant</h2>
+                <p>Delicious food, warm vibes, and unforgettable moments since 1996.</p>
+            </div>
+            <div class="footer-box">
+                <h3>Quick Links</h3>
+                <a href="/About">About Us</a>
+                <a href="/menu">Menu</a>
+                <a href="/contact">Contact</a>
+                <a href="/Rating and Review">Reviews</a>
+            </div>
+            <div class="footer-box">
+                <h3>Contact</h3>
+                <p>📍 Jamkhandi, India</p>
+                <p>📞 +91 6360980345</p>
+                <p>⏰ 10:00 AM - 11:00 PM</p>
+            </div>
+            <div class="footer-box">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/a1restaurant__/" target="_blank">📸</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 A1 Restaurant | Designed by <b>Asma Haveli</b></p>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chatBox"
+            style="width:100%; max-width:400px; margin:40px auto; background:black; color:white; border-radius:12px; overflow:hidden; box-shadow:0 0 10px rgba(0,0,0,0.5); font-family:sans-serif;">
+            <div style="background:gold; color:black; padding:10px; font-weight:bold; text-align:center;">
+                Chat with Us 💬
+            </div>
+            <div id="chatContent" style="height:250px; overflow-y:auto; padding:10px; font-size:14px;"></div>
+            <input type="text" id="userInput" placeholder="Type your message..." onkeypress="handleKey(event)"
+                style="width:100%; padding:12px; border:none; outline:none;">
+        </div>
+    </footer>
+
+    <script>
+        window.onscroll = function () {
+            var nav = document.getElementById('navbar');
+            if (window.pageYOffset > 100) {
+                nav.style.background = "#0A0A0A";
+                nav.style.padding = "15px 5%";
+            } else {
+                nav.style.background = "linear-gradient(to bottom, rgba(0,0,0,0.7), transparent)";
+                nav.style.padding = "30px 5%";
+            }
+        };
+
+        function handleKey(event) {
+            if (event.key === "Enter") sendMessage();
+        }
+
+        function sendMessage() {
+            let input = document.getElementById("userInput");
+            let message = input.value.trim();
+            if (message === "") return;
+            let chatContent = document.getElementById("chatContent");
+            chatContent.innerHTML += `<p><b>You:</b> ${message}</p>`;
+            let reply = getBotReply(message);
+            setTimeout(() => {
+                chatContent.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }, 400);
+            input.value = "";
+        }
+
+        function getBotReply(msg) {
+            msg = msg.toLowerCase();
+            if (msg.includes("hi") || msg.includes("hello")) return "Hello! Welcome to our restaurant 😊 How can I help you?";
+            if (msg.includes("menu") || msg.includes("food")) return "We offer starters, main course, and desserts 🍽️ Check our menu page for full details.";
+            if (msg.includes("popular") || msg.includes("special")) return "Our popular dishes include Biryani, Paneer Butter Masala, and Chocolate Dessert 😋";
+            if (msg.includes("order") || msg.includes("buy")) return "You can place your order directly from our website. Go to the menu and click order.";
+            if (msg.includes("book") || msg.includes("table") || msg.includes("reservation")) return "You can book a table from our reservation page. Advance booking is recommended.";
+            if (msg.includes("time") || msg.includes("open") || msg.includes("close")) return "We are open from 10 AM to 11 PM every day.";
+            if (msg.includes("location") || msg.includes("where")) return "We are located near the city center. You can find us on Google Maps.";
+            if (msg.includes("delivery")) return "Yes, we provide home delivery 🚚 within nearby areas.";
+            if (msg.includes("payment") || msg.includes("pay")) return "We accept Cash, UPI, Debit/Credit cards, and online payments.";
+            if (msg.includes("contact") || msg.includes("phone")) return "You can contact us at +91-6360980345.";
+            if (msg.includes("cancel")) return "To cancel an order, please contact us immediately after placing it.";
+            if (msg.includes("feedback") || msg.includes("review")) return "We'd love your feedback! Please share your experience with us 😊";
+            if (msg.includes("veg")) return "We have a wide variety of vegetarian dishes 🌱";
+            if (msg.includes("non veg") || msg.includes("chicken") || msg.includes("meat")) return "We serve delicious non-veg dishes including chicken, mutton, and more 🍗";
+            return `Sorry, I didn't understand that.<br>You can ask about menu, orders, booking, or timings 😊<br><br>👉 <a href="https://wa.me/916360980345" target="_blank" style="color:gold;">Chat with us on WhatsApp</a>`;
+        }
+    </script>
+
+</body>
+
+</html>

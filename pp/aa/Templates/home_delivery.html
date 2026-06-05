@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Delivery | A1 Restaurant</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0e0c;
+            --surface: #1a1815;
+            --surface2: #222018;
+            --gold: #d4a843;
+            --gold-light: #e8c06a;
+            --text: #f0ece4;
+            --muted: #8a8070;
+            --border: #2e2b24;
+            --red: #e05252;
+            --green: #52b788;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--gold);
+        }
+
+        .cart-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            background: linear-gradient(180deg, #1a1512 0%, var(--bg) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* LAYOUT */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* CARDS */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* FORM */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        /* MENU */
+        .menu-search {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            outline: none;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .menu-search:focus {
+            border-color: var(--gold);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+
+        .cat-tab {
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .cat-tab.active,
+        .cat-tab:hover {
+            background: var(--gold);
+            color: #000;
+            border-color: var(--gold);
+            font-weight: 600;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 500px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .menu-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .menu-item:hover {
+            border-color: var(--gold);
+        }
+
+        .item-emoji {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .item-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .item-desc {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin: 0.2rem 0 0.6rem;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .add-btn {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .add-btn:hover {
+            background: var(--gold-light);
+        }
+
+        /* CART SIDEBAR */
+        .cart-sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+        }
+
+        .cart-items {
+            max-height: 260px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+        }
+
+        .cart-item-price {
+            color: var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .qty-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .qty-btn {
+            background: var(--border);
+            border: none;
+            color: var(--text);
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .qty-num {
+            font-size: 0.85rem;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            padding: 2rem 0;
+        }
+
+        .cart-total {
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            color: var(--muted);
+        }
+
+        .total-row.grand {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 0.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 0.5rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gold);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .checkout-btn:hover {
+            background: var(--gold-light);
+        }
+
+        /* MODALS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 440px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        /* PHONEPE */
+        .phonepe-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .pp-logo {
+            background: #5f259f;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 900;
+            color: white;
+        }
+
+        .phonepe-name {
+            color: #5f259f;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .accepted-text {
+            color: #5f259f;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.3rem;
+        }
+
+        .qr-container {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.8rem;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #888;
+            font-size: 0.75rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .qr-placeholder span:first-child {
+            font-size: 2.5rem;
+        }
+
+        .payee-name {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-top: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .amount-display {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-confirm {
+            flex: 1;
+            padding: 0.8rem;
+            background: var(--green);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 0.8rem;
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        /* SUCCESS */
+        .success-view {
+            display: none;
+        }
+
+        .success-view.show {
+            display: block;
+        }
+
+        .qr-view.hide {
+            display: none;
+        }
+
+        .checkmark {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .order-id {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-logo">🍽 A1 Restaurant</div>
+        <div class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="home_delivery.html" class="active">Delivery</a>
+            <a href="Table reservation.html">Reserve</a>
+        </div>
+        <button class="cart-btn" onclick="scrollToCart()">🛒 Cart <span id="cart-count">0</span></button>
+    </nav>
+
+    <div class="hero">
+        <h1>🛵 Home Delivery</h1>
+        <p>Fresh meals delivered to your doorstep · Est. 30–45 min</p>
+    </div>
+
+    <div class="container">
+        <div class="layout">
+            <!-- LEFT COLUMN -->
+            <div>
+                <div class="card">
+                    <div class="section-title">📍 Delivery Address</div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="cust-name"
+                                placeholder="Your name"></div>
+                        <div class="form-group"><label>Phone</label><input type="tel" id="cust-phone"
+                                placeholder="+91 XXXXX XXXXX"></div>
+                    </div>
+                    <div class="form-group"><label>Street Address</label><input type="text" id="cust-address"
+                            placeholder="House No, Street, Area"></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>City</label><input type="text" id="cust-city" placeholder="City">
+                        </div>
+                        <div class="form-group"><label>Pincode</label><input type="text" id="cust-pin"
+                                placeholder="560001"></div>
+                    </div>
+                    <div class="form-group"><label>Delivery Instructions (optional)</label><textarea id="cust-notes"
+                            rows="2" placeholder="e.g. Ring bell twice, leave at door..."></textarea></div>
+                </div>
+
+                <div class="card">
+                    <div class="section-title">🍴 Select Items</div>
+                    <input class="menu-search" type="text" placeholder="Search dishes..."
+                        oninput="filterMenu(this.value)">
+                    <div class="category-tabs" id="cat-tabs"></div>
+                    <div class="menu-grid" id="menu-grid"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT: CART -->
+            <div class="cart-sidebar" id="cart-section">
+                <div class="card">
+                    <div class="section-title">🛒 Your Order</div>
+                    <div class="cart-items" id="cart-items">
+                        <div class="cart-empty">No items yet.<br>Add from the menu!</div>
+                    </div>
+                    <div class="cart-total" id="cart-total" style="display:none">
+                        <div class="total-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+                        <div class="total-row"><span>Delivery fee</span><span>₹40</span></div>
+                        <div class="total-row"><span>GST (5%)</span><span id="gst">₹0</span></div>
+                        <div class="total-row grand"><span>Total</span><span id="grand-total">₹0</span></div>
+                        <button class="checkout-btn" onclick="checkout()">Proceed to Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-overlay" id="pay-modal">
+        <div class="modal">
+            <div id="qr-view" class="qr-view">
+                <div class="phonepe-badge">
+                    <div class="pp-logo">Pe</div>
+                    <span class="phonepe-name">PhonePe</span>
+                </div>
+                <div class="accepted-text">ACCEPTED HERE</div>
+                <p>Scan &amp; Pay Using PhonePe App</p>
+                <div class="qr-container">
+                    <img src="../static/qr.png" alt="PhonePe QR Code"
+                        style="width:220px;height:220px;object-fit:contain;border-radius:8px;display:block;">
+                </div>
+                <div class="payee-name">SANIYA MUSA KORTI</div>
+                <div class="amount-display" id="pay-amount">₹0</div>
+                <div class="modal-btns">
+                    <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button class="btn-confirm" onclick="confirmPayment()">✓ Payment Done</button>
+                </div>
+            </div>
+            <div id="success-view" class="success-view">
+                <div class="checkmark">✅</div>
+                <h2>Order Placed!</h2>
+                <p>Your food is being prepared. Expected delivery in 35–45 minutes.</p>
+                <div class="order-id" id="order-id-text"></div>
+                <br>
+                <button class="btn-confirm" style="width:100%;padding:0.8rem" onclick="resetOrder()">Order
+                    Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const MENU = [
+            { id: 1, name: "Butter Chicken", desc: "Creamy tomato gravy", price: 320, cat: "Mains", emoji: "🍛" },
+            { id: 2, name: "Paneer Tikka", desc: "Smoky cottage cheese", price: 260, cat: "Starters", emoji: "🧆" },
+            { id: 3, name: "Veg Biryani", desc: "Fragrant basmati rice", price: 220, cat: "Mains", emoji: "🍚" },
+            { id: 4, name: "Dal Makhani", desc: "Slow-cooked black lentils", price: 180, cat: "Mains", emoji: "🥘" },
+            { id: 5, name: "Chicken Wings", desc: "Spicy & crispy", price: 280, cat: "Starters", emoji: "🍗" },
+            { id: 6, name: "Garlic Naan", desc: "Soft leavened bread", price: 60, cat: "Breads", emoji: "🫓" },
+            { id: 7, name: "Gulab Jamun", desc: "Sweet milk dumplings", price: 80, cat: "Desserts", emoji: "🍮" },
+            { id: 8, name: "Mango Lassi", desc: "Chilled yogurt drink", price: 90, cat: "Drinks", emoji: "🥭" },
+            { id: 9, name: "Masala Chai", desc: "Spiced milk tea", price: 50, cat: "Drinks", emoji: "☕" },
+            { id: 10, name: "Cheese Naan", desc: "Stuffed with cheese", price: 90, cat: "Breads", emoji: "🧀" },
+            { id: 11, name: "Fish Curry", desc: "Coastal spiced fish", price: 340, cat: "Mains", emoji: "🐟" },
+            { id: 12, name: "Brownie", desc: "Warm chocolate delight", price: 120, cat: "Desserts", emoji: "🍫" },
+            { id: 13, name: "Mutton Biryani", desc: "Slow-dum aromatic rice", price: 450, cat: "Mains", emoji: "🍖" },
+            { id: 14, name: "Tandoori Chicken", desc: "Clay oven grilled chicken", price: 380, cat: "Starters", emoji: "🔥" },
+            { id: 15, name: "Chicken Tikka", desc: "Spicy grilled chicken", price: 300, cat: "Starters", emoji: "🍢" },
+            { id: 16, name: "Chicken 65", desc: "South Indian spicy chicken", price: 310, cat: "Starters", emoji: "🌶️" },
+            { id: 17, name: "Chicken Manchurian", desc: "Indo-Chinese chicken", price: 340, cat: "Chinese", emoji: "🥡" },
+            { id: 18, name: "Chicken Kebab", desc: "Juicy grilled kebab", price: 350, cat: "Starters", emoji: "🍢" },
+            { id: 19, name: "Chicken Shawarma", desc: "Arabic chicken wrap", price: 220, cat: "Fast Food", emoji: "🌯" },
+            { id: 20, name: "Chicken Roast", desc: "Roasted spicy chicken", price: 370, cat: "Mains", emoji: "🍗" },
+            { id: 21, name: "Chicken Hyderabadi", desc: "Hyderabadi special gravy", price: 350, cat: "Mains", emoji: "🍛" },
+            { id: 22, name: "Chicken Kolhapuri", desc: "Extra spicy curry", price: 340, cat: "Mains", emoji: "🌶️" },
+            { id: 23, name: "Chicken Chettinad", desc: "South Indian masala", price: 360, cat: "Mains", emoji: "🍲" },
+            { id: 24, name: "Chicken Pepper Dry", desc: "Pepper flavored chicken", price: 330, cat: "Mains", emoji: "🧂" },
+            { id: 25, name: "Chicken Masala", desc: "Rich masala chicken", price: 310, cat: "Mains", emoji: "🍗" },
+            { id: 26, name: "Chicken Burger", desc: "Loaded chicken burger", price: 260, cat: "Fast Food", emoji: "🍔" },
+            { id: 27, name: "Chicken Pizza", desc: "Cheesy chicken pizza", price: 420, cat: "Fast Food", emoji: "🍕" },
+            { id: 28, name: "Chicken Momos", desc: "Steamed dumplings", price: 180, cat: "Snacks", emoji: "🥟" },
+            { id: 29, name: "Chicken Soup", desc: "Hot chicken soup", price: 160, cat: "Starters", emoji: "🍲" },
+            { id: 30, name: "Chicken Popcorn", desc: "Crispy popcorn chicken", price: 210, cat: "Snacks", emoji: "🍿" },
+            { id: 31, name: "Chicken Roll", desc: "Stuffed chicken roll", price: 170, cat: "Snacks", emoji: "🌯" },
+            { id: 32, name: "Chicken Pakoda", desc: "Fried chicken pakoda", price: 220, cat: "Snacks", emoji: "🍗" },
+            { id: 33, name: "Chicken Seekh Kebab", desc: "Minced chicken kebab", price: 350, cat: "Starters", emoji: "🍢" },
+            { id: 34, name: "Chicken Dum Biryani", desc: "Special dum biryani", price: 390, cat: "Mains", emoji: "🍛" },
+            { id: 35, name: "Chicken Fried Rice", desc: "Chinese fried rice", price: 260, cat: "Rice", emoji: "🍚" },
+            { id: 36, name: "Chicken Schezwan Rice", desc: "Spicy schezwan rice", price: 280, cat: "Rice", emoji: "🌶️" },
+            { id: 37, name: "Chicken Noodles", desc: "Hakka noodles", price: 240, cat: "Chinese", emoji: "🍜" },
+            { id: 38, name: "Veg Fried Rice", desc: "Veg Chinese rice", price: 200, cat: "Rice", emoji: "🍚" },
+            { id: 39, name: "Paneer Butter Masala", desc: "Creamy paneer curry", price: 260, cat: "Veg", emoji: "🧈" },
+            { id: 40, name: "Kadai Paneer", desc: "Spicy kadai paneer", price: 250, cat: "Veg", emoji: "🍲" },
+            { id: 41, name: "Palak Paneer", desc: "Spinach paneer curry", price: 240, cat: "Veg", emoji: "🥬" },
+            { id: 42, name: "Veg Manchurian", desc: "Veg manchurian balls", price: 220, cat: "Chinese", emoji: "🥡" },
+            { id: 43, name: "Spring Roll", desc: "Crispy spring rolls", price: 180, cat: "Snacks", emoji: "🥠" },
+            { id: 44, name: "French Fries", desc: "Salted crispy fries", price: 140, cat: "Snacks", emoji: "🍟" },
+            { id: 45, name: "Cold Coffee", desc: "Creamy cold coffee", price: 120, cat: "Drinks", emoji: "🥤" },
+            { id: 46, name: "Lemon Juice", desc: "Fresh lime juice", price: 70, cat: "Drinks", emoji: "🍋" },
+            { id: 47, name: "Ice Cream", desc: "Vanilla ice cream", price: 90, cat: "Desserts", emoji: "🍨" },
+            { id: 48, name: "Chocolate Shake", desc: "Cold chocolate shake", price: 140, cat: "Drinks", emoji: "🍫" },
+            { id: 49, name: "Prawns Fry", desc: "Crispy prawns fry", price: 420, cat: "Seafood", emoji: "🍤" },
+            { id: 50, name: "Fish Fry", desc: "Spicy fish fry", price: 390, cat: "Seafood", emoji: "🐠" },
+            { id: 61, name: "Chicken Schezwan Noodles", desc: "Spicy schezwan noodles", price: 290, cat: "Chinese", emoji: "🍜" },
+            { id: 62, name: "Chicken Hakka Noodles", desc: "Classic hakka noodles", price: 270, cat: "Chinese", emoji: "🥡" },
+            { id: 63, name: "Chicken Triple Rice", desc: "Rice with noodles & gravy", price: 340, cat: "Chinese", emoji: "🍚" },
+            { id: 64, name: "Chicken Dragon", desc: "Sweet spicy chicken", price: 360, cat: "Chinese", emoji: "🐉" },
+            { id: 65, name: "Chicken Chilli", desc: "Hot garlic chicken", price: 320, cat: "Chinese", emoji: "🌶️" },
+            { id: 66, name: "Chicken Sweet Corn Soup", desc: "Creamy corn soup", price: 170, cat: "Starters", emoji: "🥣" },
+            { id: 67, name: "Chicken Hot & Sour Soup", desc: "Tangy spicy soup", price: 180, cat: "Starters", emoji: "🍲" },
+            { id: 68, name: "Chicken Stew", desc: "Slow cooked chicken stew", price: 340, cat: "Mains", emoji: "🍛" },
+            { id: 69, name: "Chicken Bhuna", desc: "Rich roasted masala", price: 360, cat: "Mains", emoji: "🥘" },
+            { id: 70, name: "Chicken Achari", desc: "Pickle flavored curry", price: 350, cat: "Mains", emoji: "🥒" },
+            { id: 71, name: "Chicken Tawa Fry", desc: "Tawa roasted chicken", price: 370, cat: "Mains", emoji: "🍳" },
+            { id: 72, name: "Chicken Kali Mirch", desc: "Black pepper chicken", price: 360, cat: "Mains", emoji: "🧂" },
+            { id: 73, name: "Chicken Bharta", desc: "Mashed spicy chicken", price: 340, cat: "Mains", emoji: "🍗" },
+            { id: 74, name: "Chicken Pulao", desc: "Mild aromatic rice", price: 290, cat: "Rice", emoji: "🍚" },
+            { id: 75, name: "Chicken Tandoori Biryani", desc: "Tandoori flavored biryani", price: 420, cat: "Rice", emoji: "🍛" },
+            { id: 76, name: "Chicken Lemon Coriander Soup", desc: "Fresh coriander soup", price: 170, cat: "Starters", emoji: "🍋" },
+            { id: 77, name: "Chicken Mayo Sandwich", desc: "Mayo loaded sandwich", price: 210, cat: "Fast Food", emoji: "🥪" },
+            { id: 78, name: "Chicken Cheese Burger", desc: "Cheesy burger delight", price: 290, cat: "Fast Food", emoji: "🍔" },
+            { id: 79, name: "Chicken BBQ Pizza", desc: "Barbecue chicken pizza", price: 450, cat: "Fast Food", emoji: "🍕" },
+            { id: 80, name: "Chicken Peri Peri Fries", desc: "Spicy peri peri fries", price: 240, cat: "Snacks", emoji: "🍟" },
+            { id: 81, name: "Chicken Taco", desc: "Mexican chicken taco", price: 220, cat: "Fast Food", emoji: "🌮" },
+            { id: 82, name: "Chicken Burrito", desc: "Stuffed Mexican burrito", price: 320, cat: "Fast Food", emoji: "🌯" },
+            { id: 83, name: "Chicken Quesadilla", desc: "Cheesy grilled tortilla", price: 340, cat: "Fast Food", emoji: "🧀" },
+            { id: 84, name: "Chicken Doner", desc: "Turkish style chicken", price: 280, cat: "Fast Food", emoji: "🥙" },
+            { id: 85, name: "Chicken Loaded Fries", desc: "Fries topped with chicken", price: 310, cat: "Snacks", emoji: "🍟" },
+            { id: 86, name: "Chicken Cheese Balls", desc: "Cheesy chicken bites", price: 240, cat: "Snacks", emoji: "🧀" },
+            { id: 87, name: "Chicken Stuffed Paratha", desc: "Stuffed spicy paratha", price: 180, cat: "Breads", emoji: "🫓" },
+            { id: 88, name: "Chicken Puff", desc: "Bakery style puff", price: 90, cat: "Snacks", emoji: "🥐" },
+            { id: 89, name: "Chicken Croissant", desc: "Buttery chicken croissant", price: 210, cat: "Snacks", emoji: "🥐" },
+            { id: 90, name: "Chicken Rice Bowl", desc: "Healthy chicken bowl", price: 290, cat: "Rice", emoji: "🍲" }
+             
+        ];
+
+        const CATS = ["All", ...new Set(MENU.map(i => i.cat))];
+        let activecat = "All";
+        let cart = {};
+        let currentOrderRef = null;
+
+        function buildCatTabs() {
+            document.getElementById("cat-tabs").innerHTML = CATS.map(c =>
+                `<button class="cat-tab ${c === activecat ? 'active' : ''}" onclick="setcat('${c}')">${c}</button>`
+            ).join('');
+        }
+
+        function setcat(c) { activecat = c; buildCatTabs(); renderMenu(); }
+
+        function renderMenu(search = "") {
+            const filtered = MENU.filter(i =>
+                (activecat === "All" || i.cat === activecat) &&
+                i.name.toLowerCase().includes(search.toLowerCase())
+            );
+            document.getElementById("menu-grid").innerHTML = filtered.length
+                ? filtered.map(i => `
+                    <div class="menu-item">
+                        <span class="item-emoji">${i.emoji}</span>
+                        <div class="item-name">${i.name}</div>
+                        <div class="item-desc">${i.desc}</div>
+                        <div class="item-footer">
+                            <span class="item-price">₹${i.price}</span>
+                            <button class="add-btn" onclick="addItem(${i.id})">+ Add</button>
+                        </div>
+                    </div>`).join('')
+                : `<p style="color:var(--muted);font-size:0.85rem;grid-column:1/-1">No items found.</p>`;
+        }
+
+        function filterMenu(v) { renderMenu(v); }
+
+        function addItem(id) { cart[id] = (cart[id] || 0) + 1; renderCart(); }
+
+        function changeQty(id, delta) {
+            cart[id] = (cart[id] || 0) + delta;
+            if (cart[id] <= 0) delete cart[id];
+            renderCart();
+        }
+
+        function renderCart() {
+            const keys = Object.keys(cart);
+            document.getElementById("cart-count").textContent = keys.reduce((s, k) => s + cart[k], 0);
+            const cartEl = document.getElementById("cart-items");
+            const totalEl = document.getElementById("cart-total");
+
+            if (!keys.length) {
+                cartEl.innerHTML = `<div class="cart-empty">No items yet.<br>Add from the menu!</div>`;
+                totalEl.style.display = "none";
+                return;
+            }
+
+            let subtotal = 0;
+            cartEl.innerHTML = keys.map(id => {
+                const item = MENU.find(m => m.id == id);
+                subtotal += item.price * cart[id];
+                return `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.emoji} ${item.name}</div>
+                            <div class="cart-item-price">₹${item.price} × ${cart[id]}</div>
+                        </div>
+                        <div class="qty-ctrl">
+                            <button class="qty-btn" onclick="changeQty(${id}, -1)">−</button>
+                            <span class="qty-num">${cart[id]}</span>
+                            <button class="qty-btn" onclick="changeQty(${id}, 1)">+</button>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            const gst = Math.round(subtotal * 0.05);
+            const grand = subtotal + 40 + gst;
+            document.getElementById("subtotal").textContent = `₹${subtotal}`;
+            document.getElementById("gst").textContent = `₹${gst}`;
+            document.getElementById("grand-total").textContent = `₹${grand}`;
+            totalEl.style.display = "block";
+        }
+
+        function scrollToCart() {
+            document.getElementById("cart-section").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function getCartItems() {
+            return Object.keys(cart).map(id => {
+                const item = MENU.find(m => m.id == id);
+                return { name: item.name, qty: cart[id], price: item.price };
+            });
+        }
+
+        function checkout() {
+            const name = document.getElementById("cust-name").value.trim();
+            const address = document.getElementById("cust-address").value.trim();
+            if (!name) { alert("Please enter your name!"); return; }
+            if (!address) { alert("Please enter your address!"); return; }
+            const grandVal = parseFloat(document.getElementById("grand-total").textContent.replace("₹", "")) || 0;
+            document.getElementById("pay-amount").textContent = `₹${grandVal.toFixed(2)}`;
+            document.getElementById("qr-view").classList.remove("hide");
+            document.getElementById("success-view").classList.remove("show");
+            document.getElementById("pay-modal").classList.add("show");
+        }
+
+        function closeModal() { document.getElementById("pay-modal").classList.remove("show"); }
+
+        async function confirmPayment() {
+            const payload = {
+                customer_name: document.getElementById("cust-name").value.trim(),
+                phone: document.getElementById("cust-phone").value.trim(),
+                address: document.getElementById("cust-address").value.trim(),
+                city: document.getElementById("cust-city").value.trim(),
+                pincode: document.getElementById("cust-pin").value.trim(),
+                notes: document.getElementById("cust-notes").value.trim(),
+                items: getCartItems(),
+                subtotal: parseFloat(document.getElementById("subtotal").textContent.replace("₹", "")) || 0,
+                gst: parseFloat(document.getElementById("gst").textContent.replace("₹", "")) || 0,
+                delivery_fee: 40,
+                total: parseFloat(document.getElementById("grand-total").textContent.replace("₹", "")) || 0
+            };
+
+            // Try to save to Flask backend if running
+            try {
+                const res = await fetch("/api/delivery_orders", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                currentOrderRef = data.order_ref || ("DEL-" + Date.now().toString().slice(-6));
+            } catch (e) {
+                // Offline / standalone mode
+                currentOrderRef = "DEL-" + Date.now().toString().slice(-6);
+            }
+
+            document.getElementById("qr-view").classList.add("hide");
+            document.getElementById("success-view").classList.add("show");
+            document.getElementById("order-id-text").textContent = "Order ID: " + currentOrderRef;
+        }
+
+        function resetOrder() {
+            cart = {};
+            renderCart();
+            document.getElementById("pay-modal").classList.remove("show");
+            document.getElementById("qr-view").classList.remove("hide");
+            document.getElementById("success-view").classList.remove("show");
+            ["cust-name", "cust-phone", "cust-address", "cust-city", "cust-pin", "cust-notes"]
+                .forEach(id => { document.getElementById(id).value = ""; });
+        }
+
+        // Init
+        buildCatTabs();
+        renderMenu();
+    </script>
+</body>
+
+</html>

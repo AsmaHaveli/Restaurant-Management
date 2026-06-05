@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Reviews & Ratings</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9962A;
+    --gold-light: #F5E4B3;
+    --gold-pale: #FDF8EC;
+    --dark: #1A1208;
+    --dark-2: #2E2110;
+    --mid: #6B5533;
+    --soft: #F7F2E8;
+    --cream: #FFFDF7;
+    --border: rgba(201,150,42,0.2);
+    --border-hover: rgba(201,150,42,0.5);
+    --shadow: 0 4px 32px rgba(26,18,8,0.10);
+    --radius: 16px;
+  }
+
+  body {
+    background: var(--soft);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 120%, rgba(201,150,42,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em {
+    color: var(--gold);
+    font-style: italic;
+  }
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.75rem;
+  }
+
+  /* SUMMARY BAR */
+  .summary-bar {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .summary-score {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .score-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .score-label {
+    font-size: 13px;
+    color: var(--mid);
+  }
+  .stars-row {
+    display: flex;
+    gap: 3px;
+  }
+  .star-icon {
+    font-size: 20px;
+    color: var(--gold);
+  }
+  .star-icon.empty { color: #D9CEBC; }
+  .divider-v {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+  }
+  .count-pill {
+    background: var(--gold-pale);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 13px;
+    color: var(--mid);
+  }
+  .count-pill strong { color: var(--dark); font-weight: 500; }
+
+  /* BREAKDOWN */
+  .breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 180px;
+  }
+  .breakdown-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--mid);
+  }
+  .breakdown-label { width: 42px; text-align: right; }
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--gold-light);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 99px;
+    transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+  }
+  .breakdown-count { width: 24px; }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* WRITE REVIEW CARD */
+  .write-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  .write-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .write-card h2 span {
+    font-size: 11px;
+    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--mid);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .form-group { margin-bottom: 1.25rem; }
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    background: #fff;
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* STAR PICKER */
+  .star-picker {
+    display: flex;
+    gap: 8px;
+  }
+  .star-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 28px;
+    color: #D9CEBC;
+    transition: color 0.15s, transform 0.15s;
+    padding: 0;
+    line-height: 1;
+  }
+  .star-btn:hover, .star-btn.active { color: var(--gold); transform: scale(1.15); }
+
+  /* SUBMIT BTN */
+  .submit-btn {
+    width: 100%;
+    background: var(--dark);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .submit-btn:hover { background: var(--gold); }
+  .submit-btn:active { transform: scale(0.98); }
+
+  /* FILTER BAR */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .filter-label {
+    font-size: 12px;
+    color: var(--mid);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 4px;
+  }
+  .filter-chip {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-chip:hover, .filter-chip.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+  }
+
+  /* REVIEWS */
+  .reviews-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--dark);
+    margin-bottom: 1rem;
+  }
+
+  .review-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.4s ease both;
+  }
+  .review-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: var(--shadow);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .review-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 0.85rem;
+  }
+  .avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 15px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .review-meta { flex: 1; }
+  .reviewer-name {
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--dark);
+  }
+  .review-date {
+    font-size: 12px;
+    color: var(--mid);
+    margin-top: 2px;
+  }
+  .review-stars {
+    display: flex;
+    gap: 2px;
+    font-size: 14px;
+  }
+  .review-dish {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--gold-pale);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 3px 12px;
+    font-size: 11px;
+    color: var(--mid);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+  .review-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #3A2C14;
+  }
+  .like-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--mid);
+    cursor: pointer;
+    margin-top: 0.85rem;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .like-btn:hover { background: #FFF5E0; border-color: var(--gold); color: var(--gold); }
+  .like-btn.liked { background: #FFF5E0; border-color: var(--gold); color: var(--gold); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--mid);
+  }
+  .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .empty-state p { font-size: 14px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--dark);
+    color: #fff;
+    padding: 0.85rem 1.5rem;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s;
+    z-index: 999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast .check { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .summary-bar { gap: 1.5rem; }
+    .divider-v { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">✦ Customer Voices ✦</p>
+  <h1 class="hero-title">Ratings &amp; <em>Reviews</em></h1>
+  <p class="hero-sub">Real experiences from our guests</p>
+</div>
+
+<!-- SUMMARY BAR -->
+<div class="summary-bar" id="summaryBar">
+  <div class="summary-score">
+    <span class="score-big" id="avgScore">—</span>
+    <span class="score-label">out of 5</span>
+  </div>
+  <div class="stars-row" id="avgStars"></div>
+  <div class="divider-v"></div>
+  <div class="count-pill"><strong id="reviewCount">0</strong> reviews</div>
+  <div class="divider-v"></div>
+  <div class="breakdown" id="breakdown"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- WRITE REVIEW -->
+  <div class="write-card">
+    <h2>Share Your Experience <span>✦ Your review helps others</span></h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Your Name</label>
+        <input class="form-input" id="nameInput" type="text" placeholder="e.g. Priya S."/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dish You Tried</label>
+        <input class="form-input" id="dishInput" type="text" placeholder="e.g. Butter Chicken"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Your Rating</label>
+      <div class="star-picker" id="starPicker">
+        <button class="star-btn" data-val="1">★</button>
+        <button class="star-btn" data-val="2">★</button>
+        <button class="star-btn" data-val="3">★</button>
+        <button class="star-btn" data-val="4">★</button>
+        <button class="star-btn" data-val="5">★</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Your Review</label>
+      <textarea class="form-textarea" id="reviewInput" placeholder="Tell us about your experience — the food, service, atmosphere…"></textarea>
+    </div>
+    <button class="submit-btn" onclick="submitReview()">
+      ★ Post Review
+    </button>
+  </div>
+
+  <!-- REVIEWS LIST -->
+  <div class="reviews-section">
+    <h2 id="listTitle">All Reviews</h2>
+    <div class="filter-bar">
+      <span class="filter-label">Filter</span>
+      <button class="filter-chip active" data-filter="all" onclick="setFilter(this,'all')">All</button>
+      <button class="filter-chip" data-filter="5" onclick="setFilter(this,'5')">★★★★★</button>
+      <button class="filter-chip" data-filter="4" onclick="setFilter(this,'4')">★★★★</button>
+      <button class="filter-chip" data-filter="3" onclick="setFilter(this,'3')">★★★</button>
+      <button class="filter-chip" data-filter="1-2" onclick="setFilter(this,'1-2')">1-2 ★</button>
+    </div>
+    <div id="reviewsList"></div>
+  </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="check">✓</span> <span id="toastMsg">Review posted!</span>
+</div>
+
+<script>
+const COLORS = ['#8B4513','#C9962A','#556B2F','#8B6914','#6B4423','#A0522D','#2E8B57','#CD853F'];
+
+let selectedRating = 0;
+let currentFilter = 'all';
+
+let reviews = [
+  { name: "Arjun M.", dish: "Paneer Tikka", rating: 5, text: "Absolutely divine! The paneer was perfectly charred and the spices were balanced beautifully. The service was warm and the ambiance made us feel right at home. Will definitely return!", date: "2 days ago", likes: 12, liked: false },
+  { name: "Sneha R.", dish: "Biryani", rating: 5, text: "Best biryani I've had in years! Each grain of rice was separate, the meat was tender, and the aroma was incredible. Paired with the raita — perfection.", date: "4 days ago", likes: 9, liked: false },
+  { name: "Rahul K.", dish: "Dal Makhani", rating: 4, text: "Rich, creamy, and deeply flavorful. Could perhaps be a touch less oily, but the taste is exceptional. The naan that came along was soft and pillowy.", date: "1 week ago", likes: 6, liked: false },
+  { name: "Meena T.", dish: "Masala Chai", rating: 3, text: "Food is good but the wait time was longer than expected. The chai though was outstanding — perfectly spiced and strong. Hoping they sort out the pacing.", date: "1 week ago", likes: 3, liked: false },
+];
+
+const starBtns = document.querySelectorAll('.star-btn');
+starBtns.forEach(btn => {
+  btn.addEventListener('mouseenter', () => highlightStars(+btn.dataset.val));
+  btn.addEventListener('mouseleave', () => highlightStars(selectedRating));
+  btn.addEventListener('click', () => {
+    selectedRating = +btn.dataset.val;
+    highlightStars(selectedRating);
+  });
+});
+
+function highlightStars(n) {
+  starBtns.forEach(b => b.classList.toggle('active', +b.dataset.val <= n));
+}
+
+function initials(name) {
+  return name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+}
+function avatarColor(name) {
+  let h = 0;
+  for (let c of name) h += c.charCodeAt(0);
+  return COLORS[h % COLORS.length];
+}
+function starsHtml(r, size=14) {
+  let h = '';
+  for (let i=1;i<=5;i++) h += `<span style="font-size:${size}px;color:${i<=r?'#C9962A':'#D9CEBC'}">${i<=r?'★':'★'}</span>`;
+  return h;
+}
+
+function renderReviews() {
+  const list = document.getElementById('reviewsList');
+  let filtered = currentFilter === 'all' ? reviews
+    : currentFilter === '1-2' ? reviews.filter(r=>r.rating<=2)
+    : reviews.filter(r=>r.rating === +currentFilter);
+
+  document.getElementById('listTitle').textContent =
+    currentFilter === 'all' ? 'All Reviews' :
+    currentFilter === '1-2' ? '1–2 Star Reviews' :
+    `${currentFilter}-Star Reviews`;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">☕</div><p>No reviews yet in this category.<br>Be the first to share your experience!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map((r,i) => `
+    <div class="review-card" style="animation-delay:${i*0.07}s">
+      <div class="review-header">
+        <div class="avatar" style="background:${avatarColor(r.name)}">${initials(r.name)}</div>
+        <div class="review-meta">
+          <div class="reviewer-name">${r.name}</div>
+          <div class="review-date">${r.date}</div>
+        </div>
+        <div class="review-stars">${starsHtml(r.rating)}</div>
+      </div>
+      ${r.dish ? `<div class="review-dish">🍽 ${r.dish}</div>` : ''}
+      <div class="review-text">${r.text}</div>
+      <button class="like-btn ${r.liked?'liked':''}" onclick="likeReview(${reviews.indexOf(r)})">
+        ${r.liked?'♥':'♡'} Helpful (${r.likes})
+      </button>
+    </div>
+  `).join('');
+}
+
+function renderSummary() {
+  if (!reviews.length) { document.getElementById('avgScore').textContent='—'; return; }
+  const avg = reviews.reduce((a,r)=>a+r.rating,0)/reviews.length;
+  document.getElementById('avgScore').textContent = avg.toFixed(1);
+  document.getElementById('reviewCount').textContent = reviews.length;
+
+  const avgStars = document.getElementById('avgStars');
+  avgStars.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const s=document.createElement('span');
+    s.className='star-icon'+(i>Math.round(avg)?' empty':'');
+    s.textContent='★';
+    avgStars.appendChild(s);
+  }
+
+  const bk = document.getElementById('breakdown');
+  const counts = [5,4,3,2,1].map(s=>({star:s,count:reviews.filter(r=>r.rating===s).length}));
+  const max = Math.max(...counts.map(c=>c.count),1);
+  bk.innerHTML = counts.map(c=>`
+    <div class="breakdown-row">
+      <span class="breakdown-label">${c.star}★</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${(c.count/max*100).toFixed(0)}%"></div></div>
+      <span class="breakdown-count">${c.count}</span>
+    </div>
+  `).join('');
+}
+
+function likeReview(idx) {
+  reviews[idx].liked = !reviews[idx].liked;
+  reviews[idx].likes += reviews[idx].liked ? 1 : -1;
+  renderReviews();
+}
+
+function setFilter(btn, filter) {
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = filter;
+  renderReviews();
+}
+
+function submitReview() {
+  const name = document.getElementById('nameInput').value.trim();
+  const dish = document.getElementById('dishInput').value.trim();
+  const text = document.getElementById('reviewInput').value.trim();
+
+  if (!name) { showToast('Please enter your name.'); return; }
+  if (!selectedRating) { showToast('Please select a star rating.'); return; }
+  if (!text) { showToast('Please write a review.'); return; }
+
+  reviews.unshift({ name, dish, rating: selectedRating, text, date: 'Just now', likes: 0, liked: false });
+
+  document.getElementById('nameInput').value='';
+  document.getElementById('dishInput').value='';
+  document.getElementById('reviewInput').value='';
+  selectedRating=0;
+  highlightStars(0);
+  currentFilter='all';
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));
+
+  renderSummary();
+  renderReviews();
+  showToast('Your review has been posted! Thank you ✦');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+renderSummary();
+renderReviews();
+</script>
+</body>
+</html>

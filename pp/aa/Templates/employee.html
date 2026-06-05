@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management | A1 Chicken</title>
+ 
+    <style>
+        /* ❗ YOUR CSS IS KEPT EXACTLY SAME (NO CHANGE) */
+        :root {
+            --primary-color: #6f1d1b;
+            --secondary-color: #432818;
+            --accent-color: #bb9457;
+            --text-light: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+        }
+ 
+        body {
+            margin: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("https://i.pinimg.com/originals/bf/8d/36/bf8d368639f3420bc5f5558c954976db.png");
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+ 
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+ 
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+ 
+        .stat-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: 0.3s;
+        }
+ 
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+        }
+ 
+        .stat-box h2 {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+ 
+        .employee-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            color: #333;
+        }
+ 
+        .table-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+ 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+ 
+        th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #777;
+        }
+ 
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+ 
+        .emp-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+ 
+        .emp-info img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+ 
+        .role-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            background: #eee;
+        }
+ 
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+ 
+        .btn-action {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+ 
+        .btn-edit {
+            background: var(--accent-color);
+            color: white;
+        }
+ 
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+            margin-left: 5px;
+        }
+ 
+        .add-btn {
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+ 
+        /* ── PASSWORD LOCK SCREEN (NEW) ── */
+        #lockScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+                        url("https://i.pinimg.com/originals/bf/8d/36/bf8d368639f3420bc5f5558c954976db.png");
+            background-size: cover;
+            background-position: center;
+        }
+ 
+        .lock-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 24px;
+            padding: 50px 40px 40px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            animation: slideUp 0.5s ease;
+        }
+ 
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+ 
+        .lock-icon {
+            font-size: 52px;
+            margin-bottom: 10px;
+            display: block;
+        }
+ 
+        .lock-card h2 {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin: 0 0 4px;
+        }
+ 
+        .lock-card p {
+            color: rgba(255,255,255,0.55);
+            font-size: 13px;
+            margin: 0 0 28px;
+        }
+ 
+        .lock-input {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 15px;
+            font-family: "Poppins", sans-serif;
+            letter-spacing: 3px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border 0.25s;
+        }
+ 
+        .lock-input::placeholder {
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.35);
+        }
+ 
+        .lock-input:focus {
+            border-color: var(--accent-color);
+        }
+ 
+        .lock-btn {
+            margin-top: 16px;
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary-color);
+            color: #fff;
+            font-size: 15px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.15s;
+        }
+ 
+        .lock-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+ 
+        .lock-error {
+            margin-top: 12px;
+            color: #e74c3c;
+            font-size: 13px;
+            min-height: 18px;
+        }
+ 
+        .lock-shake {
+            animation: shake 0.4s ease;
+        }
+ 
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            20%      { transform: translateX(-8px); }
+            40%      { transform: translateX(8px); }
+            60%      { transform: translateX(-6px); }
+            80%      { transform: translateX(6px); }
+        }
+    </style>
+</head>
+ 
+<body>
+ 
+    <!-- ── PASSWORD LOCK SCREEN (NEW) ── -->
+    <div id="lockScreen">
+        <div class="lock-card" id="lockCard">
+            <span class="lock-icon">🔐</span>
+            <h2>Admin Access</h2>
+            <p>A1 Chicken · Employee Portal</p>
+            <input
+                class="lock-input"
+                id="pwdInput"
+                type="password"
+                placeholder="Enter password"
+                onkeydown="if(event.key==='Enter') checkPassword()"
+                autocomplete="off"
+            >
+            <button class="lock-btn" onclick="checkPassword()">Unlock</button>
+            <div class="lock-error" id="lockError"></div>
+        </div>
+    </div>
+ 
+    <!-- ── YOUR ORIGINAL PAGE (NO CHANGE) ── -->
+    <div class="container">
+ 
+        <h1 style="text-align:center;color:var(--accent-color);margin-bottom:40px;">
+            Team A1 Management
+        </h1>
+ 
+        <div class="stats-grid">
+            <div class="stat-box">
+                <p>Total Staff</p>
+                <h2 id="totalStaff">0</h2>
+            </div>
+            <div class="stat-box">
+                <p>Active</p>
+                <h2 id="activeStaff">0</h2>
+            </div>
+            <div class="stat-box">
+                <p>Chefs</p>
+                <h2 id="chefCount">0</h2>
+            </div>
+            <div class="stat-box">
+                <p>Reception</p>
+                <h2 id="receptionCount">0</h2>
+            </div>
+        </div>
+ 
+        <div class="employee-card">
+ 
+            <div class="table-header">
+                <h3>Staff Directory</h3>
+                <button class="add-btn" onclick="openForm()">+ Add New Member</button>
+            </div>
+ 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Role</th>
+                        <th>Shift</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+ 
+                <tbody id="empTable"></tbody>
+ 
+            </table>
+        </div>
+    </div>
+ 
+    <!-- FORM -->
+    <div id="formBox"
+        style="display:none;position:fixed;top:20%;left:35%;background:white;color:black;padding:20px;border-radius:10px;">
+        <h3>Add / Edit Employee</h3>
+ 
+        <input id="name" placeholder="Name"><br><br>
+        <input id="email" placeholder="Email"><br><br>
+        <input id="role" placeholder="Role"><br><br>
+        <input id="shift" placeholder="Shift"><br><br>
+ 
+        <button onclick="saveEmployee()">Save</button>
+        <button onclick="closeForm()">Cancel</button>
+    </div>
+ 
+    <script>
+        /* ── PASSWORD LOGIC (NEW) ── */
+        const ADMIN_PASSWORD = "1234"; // 🔑 Change this to your password
+ 
+        function checkPassword() {
+            const val = document.getElementById("pwdInput").value;
+            const errEl = document.getElementById("lockError");
+            const card  = document.getElementById("lockCard");
+ 
+            if (val === ADMIN_PASSWORD) {
+                document.getElementById("lockScreen").style.display = "none";
+                errEl.textContent = "";
+            } else {
+                errEl.textContent = "Incorrect password. Please try again.";
+                card.classList.remove("lock-shake");
+                void card.offsetWidth; // reflow to restart animation
+                card.classList.add("lock-shake");
+                document.getElementById("pwdInput").value = "";
+            }
+        }
+ 
+        /* ── YOUR ORIGINAL SCRIPT (NO CHANGE) ── */
+        let employees = JSON.parse(localStorage.getItem("emps")) || [];
+        let editIndex = -1;
+ 
+        function render() {
+            let html = "";
+ 
+            employees.forEach((e, i) => {
+                html += `
+        <tr>
+            <td>
+                <div class="emp-info">
+                    <img src="https://ui-avatars.com/api/?name=${e.name}">
+                    <div>
+                        <strong>${e.name}</strong><br>
+                        <small>${e.email}</small>
+                    </div>
+                </div>
+            </td>
+            <td>${e.role}</td>
+            <td>${e.shift}</td>
+            <td><span class="status-dot"></span> Online</td>
+            <td>
+                <button class="btn-action btn-edit" onclick="editEmp(${i})">Edit</button>
+                <button class="btn-action btn-delete" onclick="deleteEmp(${i})">Delete</button>
+            </td>
+        </tr>`;
+            });
+ 
+            document.getElementById("empTable").innerHTML = html;
+ 
+            // stats
+            document.getElementById("totalStaff").innerText = employees.length;
+            document.getElementById("activeStaff").innerText = employees.length;
+            document.getElementById("chefCount").innerText = employees.filter(e => e.role.toLowerCase().includes("chef")).length;
+            document.getElementById("receptionCount").innerText = employees.filter(e => e.role.toLowerCase().includes("reception")).length;
+ 
+            localStorage.setItem("emps", JSON.stringify(employees));
+        }
+ 
+        function openForm() {
+            document.getElementById("formBox").style.display = "block";
+            editIndex = -1;
+        }
+ 
+        function closeForm() {
+            document.getElementById("formBox").style.display = "none";
+        }
+ 
+        function saveEmployee() {
+            let emp = {
+                name: name.value,
+                email: email.value,
+                role: role.value,
+                shift: shift.value
+            };
+ 
+            if (editIndex === -1) {
+                employees.push(emp);
+            } else {
+                employees[editIndex] = emp;
+            }
+ 
+            closeForm();
+            render();
+        }
+ 
+        function deleteEmp(i) {
+            employees.splice(i, 1);
+            render();
+        }
+ 
+        function editEmp(i) {
+            let e = employees[i];
+            name.value = e.name;
+            email.value = e.email;
+            role.value = e.role;
+            shift.value = e.shift;
+ 
+            editIndex = i;
+            openForm();
+        }
+ 
+        // initial data
+        if (employees.length === 0) {
+            employees = [
+                { name: "Rahul Chef", email: "rahul@a1.com", role: "Head Chef", shift: "Morning" },
+                { name: "Saira", email: "saira@a1.com", role: "Receptionist", shift: "Full Day" }
+            ];
+        }
+ 
+        render();
+    </script>
+ 
+</body>
+ 
+</html>

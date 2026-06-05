@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | A1 Restaurant</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gold: #C5A059;
+            --dark-gold: #8B6E3C;
+            --cream: #F9F7F2;
+            --deep-black: #0A0A0A;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--deep-black);
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: var(--deep-black);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        /* CONTACT HEADER */
+
+        .contact-header {
+            padding: 180px 5% 80px;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .contact-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--deep-black);
+            margin-bottom: 10px;
+        }
+
+        .contact-header p {
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        /* CONTACT GRID */
+
+        .contact-wrapper {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .info-panel h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            border-bottom: 3px solid var(--gold);
+            display: inline-block;
+        }
+
+        .contact-item {
+            margin-bottom: 40px;
+        }
+
+        .contact-item h4 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 13px;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            font-size: 1.1rem;
+            color: #333;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* MAP */
+
+        .map-container {
+            width: 100%;
+            height: 500px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            filter: grayscale(0.2) contrast(1.1);
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #0f0e0c;
+            color: #fff;
+            padding: 80px 5% 40px;
+            border-top: 2px solid var(--gold);
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-col h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: var(--gold);
+        }
+
+        .footer-col p,
+        .footer-col a {
+            color: #bbb;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .footer-col a:hover {
+            color: var(--gold);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            font-size: 18px;
+            color: #fff;
+            background: #222;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--gold);
+            color: black;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #222;
+            font-size: 12px;
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 992px) {
+
+            .contact-wrapper,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+        <a href="index.html" class="nav-logo">A1 RESTAURANT</a>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="about.html">Story</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+
+    <header class="contact-header">
+        <p>Get in Touch</p>
+        <h1>Contact Us</h1>
+    </header>
+
+    <!-- MAIN SECTION -->
+
+    <main class="contact-wrapper">
+
+        <div class="info-panel">
+
+            <div class="contact-item">
+                <h4>Visit Us</h4>
+                <p>
+                    A1 Restaurant, Tipusultan Circle, Mudhol Road,
+                    <br>
+                    Jamkhandi, Karnataka, India
+                </p>
+            </div>
+
+            <div class="contact-item">
+                <h4>Reservations & Inquiries</h4>
+
+                <a href="tel:+916360980345">
+                    +91 63609 80345
+                </a>
+
+                <a href="mailto:hello@a1restaurant.com">
+                    hello@a1restaurant.com
+                </a>
+            </div>
+
+            <div class="contact-item">
+                <h4>Operating Hours</h4>
+
+                <p>
+                    Monday - Sunday
+                    <br>
+                    10:00 AM - 11:00 PM
+                </p>
+            </div>
+
+            <div class="contact-item">
+                <h4>Follow Our Journey</h4>
+
+                <a href="https://www.instagram.com/a1restaurant__/"
+                    style="color: var(--gold);">
+                    Instagram →
+                </a>
+            </div>
+
+        </div>
+
+        <!-- GOOGLE MAP -->
+
+        <div class="map-container">
+
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15254.918451121171!2d75.28913345!3d16.3093282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc7066922339589%3A0xc3f837651a14a34b!2sJamkhandi%2C%20Karnataka%20587301!5e0!3m2!1sen!2sin!4v1711234567890!5m2!1sen!2sin"
+                allowfullscreen=""
+                loading="lazy">
+            </iframe>
+
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+            <div class="footer-col">
+
+                <a href="index.html" class="footer-logo">
+                    A1 RESTAURANT
+                </a>
+
+                <p>
+                    Bringing you the authentic taste of tradition in Jamkhandi.
+                    We pride ourselves on quality ingredients and exceptional
+                    service since 1996.
+                </p>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/a1restaurant__/">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- CONNECTED FOOTER LINKS -->
+
+            <div class="footer-col">
+
+                <h3>Quick Links</h3>
+
+                <a href="index.html">Home</a>
+
+                <a href="menu.html">Our Menu</a>
+
+                <a href="about.html">Our Story</a>
+
+                <a href="contact.html">Contact Us</a>
+
+            </div>
+
+            <div class="footer-col">
+
+                <h3>Contact Info</h3>
+
+                <p>Main Road, Jamkhandi, Karnataka</p>
+
+                <p>Phone: +91 63609 80345</p>
+
+                <p>Email: hello@a1restaurant.com</p>
+
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            &copy; 2026 A1 RESTAURANT. ALL RIGHTS RESERVED.
+            | DEVELOPED BY ASMA HAVELI
+        </div>
+
+    </footer>
+
+</body>
+
+</html>
